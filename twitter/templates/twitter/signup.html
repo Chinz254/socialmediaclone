@@ -1,0 +1,105 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <title></title>
+  </head>
+  <body style="padding-top:80px;">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+         <a class="navbar-brand" href="/">Social Network</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <form class=" ml-auto" method="POST" action="{% url 'account' %}">
+          <ul class="navbar-nav">
+                <li class="nav-item">
+                  {% csrf_token %}
+                  {{ signinform.username}}
+                </li>
+                <li class="nav-item">
+                  {% csrf_token %}
+                  {{ signinform.password}}
+                </li>
+                <li class="nav-item">
+                  {% csrf_token %}
+                  <button name="signinform" class="btn btn-success " style="line-height:1.23rem !important;" type="submit">log in</button>
+                </li>
+          </ul>
+        </form>
+      </div>
+    </nav>
+
+    <div class="container col-lg-10">
+      <div class="card" style="margin:0 auto; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;">
+        <div class="card-header">
+          <div class="card-title text-center">
+            <div class="display-4">Create a new account</div>
+          </div>
+        </div>
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-lg-12">
+              <form method="POST" action="{% url 'account' %}">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-md-10" style="margin:0 auto !important;">
+                    <div class="form-group">
+                      <p class="help-block text-danger"></p>
+                      {{ signupform.email }}
+                    </div>
+                  </div>
+                  <div class="col-md-10" style="margin:0 auto !important;">
+                    <div class="form-group">
+                      <p class="help-block text-danger"></p>
+                      {{ signupform.first_name }}
+                    </div>
+                  </div>
+                  <div class="col-md-10" style="margin:0 auto !important;">
+                    <div class="form-group">
+                      <p class="help-block text-danger"></p>
+                      {{ signupform.last_name }}
+                    </div>
+                  </div>
+                  <div class="col-md-10" style="margin:0 auto !important;">
+                    <div class="form-group">
+                      <p class="help-block text-danger"></p>
+                      {{ signupform.username }}
+                    </div>
+                  </div>
+                  <div class="col-md-10" style="margin:0 auto !important;">
+                    <div class="form-group">
+                      <p class="help-block text-danger"></p>
+                      {{ signupform.password1 }}
+                    </div>
+                  </div>
+                  <div class="col-md-10" style="margin:0 auto !important;">
+                    <div class="form-group">
+                      <p class="help-block text-danger"></p>
+                      {{ signupform.password2 }}
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="col-lg-10 text-center" style="margin:0 auto !important;">
+                    <div id="success"></div>
+                    <button  name="signupform" class="btn btn-success bt-x1" type="submit">Sign Up</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+</html>

@@ -1,0 +1,91 @@
+{% load staticfiles %}
+{% load humanize %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Social Network</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href=""><i class="fa fa-plus"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-bell"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-envelope"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-user"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/signout">Log out</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+      <div class="col-lg-7" style="margin:30px 0 0 20px; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;">
+              <form method="POST" action="{% url 'account' %}">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-md-10" style="margin:0 auto !important;">
+                    <div class="form-group" >
+                      <p class="help-block text-danger"></p>
+                      {{ form.content }}
+                    </div>
+                  </div>
+                    <div class="col-md-2">
+                        <div class="form-group" style="margin-top: 1rem;">
+                            <button id="sendMessageButton" class="btn btn-primary" type="submit">Tweet</button>
+                        </div>
+                    </div>
+                </div>
+              </form>
+      </div>
+    {% for tweet in tweets %}
+      <div class="col-lg-7" style="margin : 10px 20px;">
+        <div class="col-lg-12 card" style="padding: 0 !important;">
+          <div class="card-body" style="padding-bottom: 0 !important;">
+            <div class="card-text text-lowercase" style="font-size:14px;" ><a href="#">@{{ tweet.author }}</a></div>
+            <hr style="margin-top: 0.4rem !important;">
+            <p style="font-size:14px;">{{ tweet.content }}</p>
+              <hr style="margin-top: 0.4rem !important;">
+
+              <div class="row">
+                  <p>{{ tweet.comments.count }} comments</p>
+                  | <p>{{ tweet.likes.count }} </p>
+                  <form action="{% url 'tweet_lyk' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" name="tweet_id" value="{{ tweet.id }}">likes</button>
+                  </form>
+              </div>
+            <div class="">
+              <p class="text-right card-text" style="font-size:10px;"><b><em>{{ tweet.created_on|naturaltime }}</em></b></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+</body>
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+  <!-- Contact form JavaScript -->
+  <script src="{% static 'js/agency.min.js' %}"></script>
+</html>
